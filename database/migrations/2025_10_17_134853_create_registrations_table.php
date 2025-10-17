@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->enum('semester' , ['Fall', 'Spring', 'Summer']);
-            $table->year('year');
+            $table->string('academic_year');
             $table->timestamps();
         });
     }
