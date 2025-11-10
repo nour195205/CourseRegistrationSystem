@@ -10,6 +10,7 @@ class Course extends Model
         'course_code',
         'course_name',
         'credit_hours',
+        'discription',
     ];
     public function prerequisites()
     {
