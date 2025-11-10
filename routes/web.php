@@ -23,8 +23,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // courses
+    Route::get('/courses/dashboard', [CourseController::class, 'dashboard'])->name('courses.dashboard');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
-    Route::get('/courses/store', [CourseController::class, 'store'])->name('courses.store');
+    Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+    Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+    Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
 
     // departments
     Route::get('/departments/dashboard', [DepartmentController::class, 'dashboard'])->name('departments.dashboard');

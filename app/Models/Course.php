@@ -17,8 +17,6 @@ class Course extends Model
         'discription',    // بناءً على الـ migration
     ];
 
-    // --- العلاقات ---
-
     /**
      * الكورس ده يتبع قسم واحد
      */
@@ -57,5 +55,16 @@ class Course extends Model
     public function prerequisiteFor()
     {
         return $this->belongsToMany(Course::class, 'prerequisites', 'prerequisite_course_id', 'course_id');
+    }
+
+    /**
+     * العلاقة دي بتجيب (الأقسام الإضافية) "المسموح" ليها تاخد الكورس
+     * (اللي اخترناهم بالـ Checkbox)
+     * * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function allowedDepartments()
+    {
+        // (اسم الجدول الوسيط اللي لسه عاملينه)
+        return $this->belongsToMany(Department::class, 'allowed_departments');
     }
 }

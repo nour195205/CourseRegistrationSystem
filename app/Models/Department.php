@@ -22,4 +22,16 @@ class Department extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    /**
+     * العلاقة دي بتجيب الكورسات (بتاعة الأقسام التانية)
+     * اللي مسموح للقسم ده ياخدها
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function allowedCourses()
+    {
+        // (اسم الجدول الوسيط اللي لسه عاملينه)
+        return $this->belongsToMany(Course::class, 'allowed_departments');
+    }
 }
