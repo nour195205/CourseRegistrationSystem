@@ -2,31 +2,31 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role', // بناءً على الـ migration
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -46,16 +46,29 @@ class User extends Authenticatable
         ];
     }
 
-    public function profile(){
-        return $this->hasOne(profiles::class);
+    // --- العلاقات ---
+
+    /**
+     * كل مستخدم له بروفايل واحد
+     */
+    public function profile()
+    {
+        return $this->hasOne(profiles::class); // هنستخدم اسم الموديل (profiles)
     }
 
+    /**
+     * كل مستخدم (طالب) له كورسات مسجلها حاليًا
+     */
     public function registrations()
     {
-        return $this->hasmany(Registration::class);
+        return $this->hasMany(Registration::class);
     }
+
+    /**
+     * كل مستخدم (طالب) له كورسات اكتملت
+     */
     public function completedCourses()
     {
-        return $this->belongsToMany(Course::class, 'completed_courses', 'user_id', 'course_id');
+        return $this->hasMany(Completed_course::class); // هنستخدم اسم الموديل (Completed_course)
     }
 }
