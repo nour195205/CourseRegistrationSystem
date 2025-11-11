@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('department_id')->constrained('departments');
             $table->string('gpa');
             $table->enum('payment_status' , ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();

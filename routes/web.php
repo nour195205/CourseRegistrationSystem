@@ -4,18 +4,18 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentRegistrationController;
+use App\Http\Controllers\StudentDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
+Route::get('/dashboard', [StudentDashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,5 +37,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
     Route::put('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
     Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('departments.destroy');});
+
+
+    // 1. الصفحة اللي بتعرض الكورسات المتاحة (اللي عملناها)
+    Route::get('/register-courses', [StudentRegistrationController::class, 'index'])
+         ->name('registration.index');
+         
+    // 2. الراوت اللي الطالب هيبعتله الكورس عشان يسجله (لسه هنعمله)
+    Route::post('/register-courses', [StudentRegistrationController::class, 'store'])
+         ->name('registration.store');
+
 
 require __DIR__.'/auth.php';
