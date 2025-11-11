@@ -13,7 +13,6 @@
 
                     @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
-                            <strong>يوجد بعض الأخطاء:</strong>
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -25,11 +24,6 @@
                     <form method="POST" action="{{ route('courses.store') }}">
                         @csrf
                         
-                        {{-- 
-                        ====================================
-                        الجزء 1: البيانات الأساسية للكورس
-                        ====================================
-                        --}}
                         <fieldset class="border p-3 mb-3">
                             <legend class="float-none w-auto px-3 h6">بيانات الكورس الأساسية</legend>
 
@@ -64,6 +58,24 @@
                                 </select>
                             </div>
 
+                            {{-- 
+                            ====================================
+                            (القايمة الجديدة) اختيار الدكتور 
+                            ====================================
+                            --}}
+                            <div class="mb-3">
+                                <label for="user_id" class="form-label">دكتور المادة (Instructor)</label>
+                                <select class="form-select @error('user_id') is-invalid @enderror" 
+                                        id="user_id" name="user_id" required>
+                                    <option value="" disabled selected>-- اختر الدكتور --</option>
+                                    @foreach ($instructors as $instructor)
+                                        <option value="{{ $instructor->id }}" {{ old('user_id') == $instructor->id ? 'selected' : '' }}>
+                                            {{ $instructor->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="mb-3">
                                 <label for="discription" class="form-label">الوصف</label>
                                 <textarea class="form-control @error('discription') is-invalid @enderror" 
@@ -71,11 +83,6 @@
                             </div>
                         </fieldset>
 
-                        {{-- 
-                        ====================================
-                        الجزء 2: الأقسام المسموحة
-                        ====================================
-                        --}}
                         <fieldset class="border p-3 mb-3">
                             <legend class="float-none w-auto px-3 h6">الأقسام الإضافية المسموح لها</legend>
                             <div style="max-height: 200px; overflow-y: auto;">
@@ -94,11 +101,6 @@
                             </div>
                         </fieldset>
 
-                        {{-- 
-                        ====================================
-                        الجزء 3: المتطلبات السابقة
-                        ====================================
-                        --}}
                         <fieldset class="border p-3 mb-3">
                             <legend class="float-none w-auto px-3 h6">المتطلبات السابقة</legend>
                             <div style="max-height: 200px; overflow-y: auto;">

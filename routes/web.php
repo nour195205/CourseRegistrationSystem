@@ -6,6 +6,8 @@ use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\StudentDashboardController;
+use App\Http\Controllers\InstructorController;
+;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,5 +49,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/register-courses', [StudentRegistrationController::class, 'store'])
          ->name('registration.store');
 
+
+    // الراوت الجديد بتاع الدكتور
+    Route::get('/my-courses', [InstructorController::class, 'index'])->name('instructor.courses');
+    Route::get('/my-courses/{course}/grade', [InstructorController::class, 'showStudents'])
+         ->name('instructor.grade.show');
+    
+    Route::post('/my-courses/{course}/grade', [InstructorController::class, 'storeGrades'])
+         ->name('instructor.grade.store');
+
+    
 
 require __DIR__.'/auth.php';

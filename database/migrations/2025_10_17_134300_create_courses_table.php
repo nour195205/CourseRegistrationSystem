@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('course_code')->unique();
             $table->string('course_name');
             $table->string('credit_hours');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('department_id')->constrained();
             $table->string('discription');
             $table->timestamps();

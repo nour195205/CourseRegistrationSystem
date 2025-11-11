@@ -15,6 +15,7 @@ class Course extends Model
         'credit_hours',   // بناءً على الـ migration
         'department_id',  // بناءً على الـ migration
         'discription',    // بناءً على الـ migration
+        'user_id', // <-- (ضيف السطر ده)
     ];
 
     /**
@@ -66,5 +67,14 @@ class Course extends Model
     {
         // (اسم الجدول الوسيط اللي لسه عاملينه)
         return $this->belongsToMany(Department::class, 'allowed_departments');
+    }
+
+    /**
+     * الدكتور (Instructor) المسئول عن الكورس
+     */
+    public function instructor()
+    {
+        // (user_id هو العمود اللي ضفناه في جدول courses)
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

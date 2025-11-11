@@ -71,4 +71,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Completed_course::class); // هنستخدم اسم الموديل (Completed_course)
     }
+
+    /**
+     * الكورسات اللي الدكتور ده بيدرسها
+     */
+    public function coursesTaught()
+    {
+        // (user_id هو العمود اللي ضفناه في جدول courses)
+        return $this->hasMany(Course::class, 'user_id');
+    }
 }
