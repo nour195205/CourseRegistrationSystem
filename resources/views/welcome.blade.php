@@ -1,55 +1,76 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
-    <head>
-        <title>@yield('title')</title>
+@extends('layouts.naa')
 
-        <!-- 1. Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        
-        <!-- 2. Font (اختياري، ممكن نستخدم خطوط جوجل زي Cairo) -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&display=swap" rel="stylesheet">
+@section('content')
+<div class="container">
 
-        {{-- 3. شيلنا السطر بتاع @vite عشان ميجيبش Tailwind --}}
-        
-        <style>
-            /* 4. تطبيق الخط العربي على الجسم */
-            body {
-                font-family: 'Cairo', sans-serif;
-                background-color: #f8f9fa; /* لون خلفية زي بتاع Tailwind */
-            }
-            /* تعديل بسيط عشان الـ navigation الأصلي يشتغل */
-            .navbar {
-                border-bottom: 1px solid #e5e7eb;
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="min-h-screen">
+    {{-- =================== Hero Section (الجزء الرئيسي) =================== --}}
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center border">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold text-primary">نظام تسجيل الكورسات الجامعي</h1>
+            <p class="col-md-8 fs-4 mx-auto mt-3 text-muted">
+                منصتك المتكاملة لإدارة رحلتك الأكاديمية. سجل موادك، تابع معدلك التراكمي (GPA)، وتواصل مع دكاترة المواد بكل سهولة ويسر.
+            </p>
             
-            {{-- 
-              ملحوظة: ملف الـ navigation ده معمول بـ Tailwind
-              شكله هيتغير تمامًا وهيحتاج يتعدل بكلاسات Bootstrap
-            --}} [cite: uploaded:nour195205/courseregistrationsystem/CourseRegistrationSystem-16fea9b6c7ce54dd59a78243836dd133fb8d09f6/resources/views/layouts/navigation.blade.php]
-            @include('layouts.navigation') 
+            <div class="mt-4">
+                @guest
+                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg px-4 gap-3 mx-2">
+                        تسجيل طالب جديد
+                    </a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg px-4 mx-2">
+                        تسجيل الدخول
+                    </a>
+                @else
+                    <a href="{{ route('dashboard') }}" class="btn btn-success btn-lg px-4">
+                        الذهاب إلى لوحة التحكم
+                    </a>
+                @endguest
+            </div>
+        </div>
+    </div>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow-sm"> {{-- استخدمنا كلاسات قريبة من Bootstrap --}}
-                    <div class="container py-3"> {{-- استخدمنا container --}}
-                        @yield('header')
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main class="container mt-4"> {{-- استخدمنا container و margin --}}
-                @yield('content')
-            </main>
+    {{-- =================== Features Section (المميزات) =================== --}}
+    <div class="row align-items-md-stretch mt-5">
+        
+        {{-- ميزة 1: للطلاب --}}
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 text-white bg-dark rounded-3 shadow-sm">
+                <h3 class="mb-3">للطلاب</h3>
+                <ul class="list-unstyled fs-5">
+                    <li class="mb-2">✅ حساب المعدل (GPA) تلقائيًا.</li>
+                    <li class="mb-2">✅ تسجيل وحذف المواد بضغطة زر.</li>
+                    <li class="mb-2">✅ معرفة الساعات المتبقية والمسموحة.</li>
+                </ul>
+            </div>
         </div>
 
-        <!-- 5. Bootstrap JS Bundle -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
-</html>
+        {{-- ميزة 2: للدكاترة --}}
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 bg-white border rounded-3 shadow-sm">
+                <h3 class="mb-3 text-dark">لأعضاء هيئة التدريس</h3>
+                <ul class="list-unstyled fs-5 text-muted">
+                    <li class="mb-2">🔹 عرض قوائم الطلاب المسجلين.</li>
+                    <li class="mb-2">🔹 رصد الدرجات بسهولة.</li>
+                    <li class="mb-2">🔹 متابعة حالة الكورسات.</li>
+                </ul>
+            </div>
+        </div>
+
+        {{-- ميزة 3: الإدارة --}}
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 text-white bg-secondary rounded-3 shadow-sm">
+                <h3 class="mb-3">للإدارة</h3>
+                <ul class="list-unstyled fs-5">
+                    <li class="mb-2">⚙️ إدارة المستخدمين والصلاحيات.</li>
+                    <li class="mb-2">⚙️ التحكم في الأقسام والمواد.</li>
+                    <li class="mb-2">⚙️ ضبط المتطلبات السابقة للكورسات.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {{-- =================== Footer بسيط للصفحة =================== --}}
+    <footer class="pt-3 mt-4 text-muted border-top text-center">
+        &copy; {{ date('Y') }} جميع الحقوق محفوظة لجامعة [اسم الجامعة]
+    </footer>
+</div>
+@endsection

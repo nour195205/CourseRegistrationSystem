@@ -40,12 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('departments.destroy');});
 
 
-    // 1. الصفحة اللي بتعرض الكورسات المتاحة (اللي عملناها)
     Route::get('/register-courses', [StudentRegistrationController::class, 'index'])->name('registration.index');
     Route::post('/register-courses', [StudentRegistrationController::class, 'store'])->name('registration.store');
 
 
-    // الراوت الجديد بتاع الدكتور
     Route::get('/my-courses', [InstructorController::class, 'index'])->name('instructor.courses');
     Route::get('/my-courses/{course}/grade', [InstructorController::class, 'showStudents'])->name('instructor.grade.show');
     Route::post('/my-courses/{course}/grade', [InstructorController::class, 'storeGrades'])->name('instructor.grade.store');

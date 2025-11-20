@@ -221,58 +221,7 @@ class CourseController extends Controller
         ));
     }
    
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, Course $course)
-    // {
-    //     // 1. التحقق من صحة البيانات (زي store بس بنستثني الكود الحالي من unique)
-    //     $validatedData = $request->validate([
-    //         'course_code' => 'required|string|max:255|unique:courses,course_code,' . $course->id,
-    //         'course_name' => 'required|string|max:255',
-    //         'credit_hours' => 'required|string',
-    //         'discription' => 'required|string',
-    //         'department_id' => 'required|exists:departments,id',
-    //         'allowed_departments' => 'nullable|array',
-    //         'allowed_departments.*' => 'exists:departments,id',
-    //         'prerequisites' => 'nullable|array',
-    //         'prerequisites.*' => 'exists:courses,id',
-    //     ]);
-
-    //     // 2. بدء الـ Transaction
-    //     DB::beginTransaction();
-
-    //     try {
-    //         // ============ الخطوة 1: تحديث الكورس الأساسي ============
-    //         $course->update([
-    //             'course_code' => $validatedData['course_code'],
-    //             'course_name' => $validatedData['course_name'],
-    //             'credit_hours' => $validatedData['credit_hours'],
-    //             'department_id' => $validatedData['department_id'],
-    //             'discription' => $validatedData['discription'],
-    //         ]);
-
-    //         // ============ الخطوة 2: مزامنة الأقسام المسموحة ============
-    //         // .sync() بتمسح القديم وتحط الجديد (أو بتسيبها فاضية لو مفيش)
-    //         $course->allowedDepartments()->sync($validatedData['allowed_departments'] ?? []);
-
-    //         // ============ الخطوة 3: مزامنة المتطلبات ============
-    //         $course->prerequisites()->sync($validatedData['prerequisites'] ?? []);
-
-    //         // ============ الخطوة 4: لو كله تمام، احفظ الشغل ============
-    //         DB::commit();
-            
-    //         // 3. إعادة التوجيه لصفحة الـ index مع رسالة نجاح
-    //         return Redirect::route('courses.index')->with('success', 'تم تعديل الكورس بنجاح!');
-
-    //     } catch (\Exception $e) {
-    //         // ============ الخطوة 5: لو حصل أي مشكلة، الغي كل حاجة ============
-    //         DB::rollBack();
-            
-    //         // 4. رجع اليوزر لنفس الصفحة مع رسالة خطأ
-    //         return Redirect::back()->with('error', 'حدث خطأ أثناء تعديل الكورس.')->withInput();
-    //     }
-    // }
+   
 
     /**
      * Update the specified resource in storage.

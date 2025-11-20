@@ -26,81 +26,107 @@
     </head>
     <body>
         
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'نظام التسجيل') }}
-                </a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">
+            {{ config('app.name', 'نظام التسجيل') }}
+        </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                <div class="collapse navbar-collapse" id="mainNavbar">
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                @auth
+                    {{-- 1. الرئيسية (للكل) --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" 
+                           href="{{ route('dashboard') }}">
+                            الرئيسية
+                        </a>
+                    </li>
+
+                    {{-- ============ لينكات الأدمن ============ --}}
+                    @if(auth()->user()->role == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" 
+                               href="{{ route('admin.users.index') }}">
+                               المستخدمين
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            {{-- هنا استخدمنا departments.dashboard زي ما إنت كاتب في الراوتس --}}
+                            <a class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}" 
+                               href="{{ route('departments.dashboard') }}">
+                               الأقسام
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            {{-- هنا استخدمنا courses.dashboard زي ما إنت كاتب في الراوتس --}}
+                            <a class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}" 
+                               href="{{ route('courses.dashboard') }}">
+                               الكورسات
+                            </a>
+                        </li>
+                    @endif
                     
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        @auth
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">الرئيسية</a>
-                            </li>
-                            
-                            {{-- لو اليوزر "أدمن" (زي ما عملنا في الداتابيز) --}}
-                            @if(auth()->user()->role == 'admin')
-                                <li class="nav-item">
-                                    <a class="nav-link " href="#">الأقسام</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " href="#">الكورسات</a>
-                                </li>
-                                {{-- ممكن نضيف لينك الطلاب هنا لو حابب --}}
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="#">الطلاب</a>
-                                </li> --}}
-                            @endif
-                            
-                            {{-- لو اليوزر "طالب" --}}
-                            @if(auth()->user()->role == 'student')
-                                 <li class="nav-item">
-                                    <a class="nav-link " href="#">الكورسات المتاحة</a>
-                                </li>
-                            @endif
-                        @endauth
-                    </ul>
+                    {{-- ============ لينكات الدكتور ============ --}}
+                    @if(auth()->user()->role == 'instructor')
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('instructor.*') ? 'active' : '' }}" 
+                               href="{{ route('instructor.courses') }}">
+                               كورساتي (رصد الدرجات)
+                            </a>
+                        </li>
+                    @endif
 
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        @guest
-                            {{-- لو اليوزر زائر (مش مسجل) --}}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">تسجيل الدخول</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">تسجيل جديد</a>
-                            </li>
-                        @else
-                            {{-- لو اليوزر مسجل دخوله --}}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                    {{ Auth::user()->name }}
+                    {{-- ============ لينكات الطالب ============ --}}
+                    @if(auth()->user()->role == 'student')
+                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('registration.*') ? 'active' : '' }}" 
+                               href="{{ route('registration.index') }}">
+                               تسجيل المواد
+                            </a>
+                        </li>
+                    @endif
+                @endauth
+            </ul>
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">تسجيل الدخول</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">تسجيل جديد</a>
+                    </li>
+                @else
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    الملف الشخصي
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">الملف الشخصي</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                                تسجيل الخروج
-                                            </a>
-                                        </form>
-                                    </li>
-                                </ul>
                             </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">تسجيل الخروج</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @endguest
+            </ul>
+        </div>
+    </div>
+</nav>
         
         <main class="container py-4">
             {{-- أي صفحة هتستخدم الـ layout ده هتحط المحتوى بتاعها هنا --}}
