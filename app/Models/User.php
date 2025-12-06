@@ -77,7 +77,6 @@ class User extends Authenticatable
      */
     public function coursesTaught()
     {
-        // (user_id هو العمود اللي ضفناه في جدول courses)
         return $this->hasMany(Course::class, 'user_id');
     }
 }

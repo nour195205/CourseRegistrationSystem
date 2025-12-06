@@ -66,7 +66,7 @@
                             <td>{{ $reg->course->credit_hours }}</td>
                             <td>
                                 {{-- (الخطوة الجديدة) زرار الحذف --}}
-                                <form action="{{ route('registration.destroy', $reg->id) }}" method="POST">
+                                <form action="{{ route('registration.destroy' , $reg->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">حذف</button>

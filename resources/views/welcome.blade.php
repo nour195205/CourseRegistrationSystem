@@ -13,9 +13,6 @@
             
             <div class="mt-4">
                 @guest
-                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg px-4 gap-3 mx-2">
-                        تسجيل طالب جديد
-                    </a>
                     <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg px-4 mx-2">
                         تسجيل الدخول
                     </a>
