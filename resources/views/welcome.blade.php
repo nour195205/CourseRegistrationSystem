@@ -25,49 +25,11 @@
         </div>
     </div>
 
-    {{-- =================== Features Section (المميزات) =================== --}}
-    <div class="row align-items-md-stretch mt-5">
-        
-        {{-- ميزة 1: للطلاب --}}
-        <div class="col-md-4 mb-4">
-            <div class="h-100 p-4 text-white bg-dark rounded-3 shadow-sm">
-                <h3 class="mb-3">للطلاب</h3>
-                <ul class="list-unstyled fs-5">
-                    <li class="mb-2">✅ حساب المعدل (GPA) تلقائيًا.</li>
-                    <li class="mb-2">✅ تسجيل وحذف المواد بضغطة زر.</li>
-                    <li class="mb-2">✅ معرفة الساعات المتبقية والمسموحة.</li>
-                </ul>
-            </div>
-        </div>
-
-        {{-- ميزة 2: للدكاترة --}}
-        <div class="col-md-4 mb-4">
-            <div class="h-100 p-4 bg-white border rounded-3 shadow-sm">
-                <h3 class="mb-3 text-dark">لأعضاء هيئة التدريس</h3>
-                <ul class="list-unstyled fs-5 text-muted">
-                    <li class="mb-2">🔹 عرض قوائم الطلاب المسجلين.</li>
-                    <li class="mb-2">🔹 رصد الدرجات بسهولة.</li>
-                    <li class="mb-2">🔹 متابعة حالة الكورسات.</li>
-                </ul>
-            </div>
-        </div>
-
-        {{-- ميزة 3: الإدارة --}}
-        <div class="col-md-4 mb-4">
-            <div class="h-100 p-4 text-white bg-secondary rounded-3 shadow-sm">
-                <h3 class="mb-3">للإدارة</h3>
-                <ul class="list-unstyled fs-5">
-                    <li class="mb-2">⚙️ إدارة المستخدمين والصلاحيات.</li>
-                    <li class="mb-2">⚙️ التحكم في الأقسام والمواد.</li>
-                    <li class="mb-2">⚙️ ضبط المتطلبات السابقة للكورسات.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+   
 
     {{-- =================== Footer بسيط للصفحة =================== --}}
     <footer class="pt-3 mt-4 text-muted border-top text-center">
-        &copy; {{ date('Y') }} جميع الحقوق محفوظة لجامعة [اسم الجامعة]
+        &copy; {{ date('Y') }} جميع الحقوق محفوظة لجامعة كفر الشيخ 
     </footer>
 </div>
 @endsection
